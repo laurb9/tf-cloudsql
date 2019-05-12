@@ -14,3 +14,12 @@ output instance_ip {
 output read_connection_names {
   value = "${google_sql_database_instance.replica.*.connection_name}"
 }
+
+output user {
+  value = "${google_sql_user.root.name}"
+}
+
+output password {
+  sensitive = true
+  value = "${google_sql_user.root.password}"
+}

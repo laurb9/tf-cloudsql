@@ -86,3 +86,19 @@ resource "google_sql_database_instance" "master" {
     delete = "20m"
   }
 }
+
+resource "google_sql_database" "default" {
+  instance = "${google_sql_database_instance.master.name}"
+  name = "${var.name}"
+}
+
+resource "random_string" "root_password" {
+  length = 20
+  special = true
+}
+
+resource "google_sql_user" "root" {
+  instance = "${google_sql_database_instance.master.name}"
+  name = "root"
+  password = "${random_string.root_password.result}"
+}
